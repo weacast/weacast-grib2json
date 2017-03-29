@@ -15,6 +15,12 @@ mvn package
 ```
 
 This creates a .tar.gz in the target directory. Unzip and untar the package in a location of choice.
+The package contains a bin/lib folders that should be at the same hierarchical level (e.g. in /usr).
+
+A Docker file is also provided to get the tool ready to work within a container, from the project root run:
+```
+docker build -t claustres/grib2json .
+```
 
 Usage
 -----
@@ -69,4 +75,9 @@ _gfs.t18z.pgrbf00.2p5deg.grib2_. Notice the optional inclusion of human-readable
         ]
     }
 ]
+```
+
+When using the tool as a Docker container the arguments to the CLI have to be provided through the ARGS environment variable, the previous example becomes:
+```
+docker run --name grib2json --rm -e "ARGS=--names --data --fp 2 --fs 103 --fv 10.0 gfs.t18z.pgrbf00.2p5deg.grib2" claustres/grib2json
 ```
