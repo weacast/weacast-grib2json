@@ -9,6 +9,19 @@ by University Corporation for Atmospheric Research/Unidata.
 Installation
 ------------
 
+This requires Java to be installed on your system and the JAVA_HOME environment variable to be positioned.
+
+```
+git clone <this project>
+```
+
+The project contains a bin/lib folders with the latest version.
+
+Build
+-----
+
+This requires Maven to be installed on your system.
+
 ```
 git clone <this project>
 mvn package
@@ -77,7 +90,7 @@ _gfs.t18z.pgrbf00.2p5deg.grib2_. Notice the optional inclusion of human-readable
 ]
 ```
 
-When using the tool as a Docker container the arguments to the CLI have to be provided through the ARGS environment variable, the previous example becomes:
+When using the tool as a Docker container the arguments to the CLI have to be provided through the ARGS environment variable, with the data volume required to make input accessible within the container and get output file back the previous example becomes:
 ```
-docker run --name grib2json --rm -e "ARGS=--names --data --fp 2 --fs 103 --fv 10.0 gfs.t18z.pgrbf00.2p5deg.grib2" claustres/grib2json
+docker run --name grib2json --rm -v /mnt/data:/usr/local/data -e "ARGS=--names --data --fp 2 --fs 103 --fv 10.0 --output /usr/local/data/output.json /usr/local/data/gfs.t18z.pgrbf00.2p5deg.grib2" claustres/grib2json
 ```
