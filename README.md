@@ -1,6 +1,12 @@
 grib2json
 =========
 
+[![Build Status](https://travis-ci.org/weacast/grib2json.png?branch=master)](https://travis-ci.org/weacast/grib2json)
+[![Code Climate](https://codeclimate.com/github/weacast/grib2json/badges/gpa.svg)](https://codeclimate.com/github/weacast/grib2json)
+[![Test Coverage](https://codeclimate.com/github/weacast/grib2json/badges/coverage.svg)](https://codeclimate.com/github/weacast/grib2json/coverage)
+[![Dependency Status](https://img.shields.io/david/weacast/grib2json.svg?style=flat-square)](https://david-dm.org/weacast/grib2json)
+[![Download Status](https://img.shields.io/npm/dm/grib2json.svg?style=flat-square)](https://www.npmjs.com/package/grib2json)
+
 A command line utility that decodes [GRIB2](http://en.wikipedia.org/wiki/GRIB) files as JSON.
 
 This utility uses the netCDF-Java GRIB decoder, part of the [THREDDS](https://github.com/Unidata/thredds) project
