@@ -1,5 +1,4 @@
-grib2json
-=========
+# weacast-grib2json
 
 [![Build Status](https://travis-ci.org/weacast/grib2json.png?branch=master)](https://travis-ci.org/weacast/grib2json)
 [![Code Climate](https://codeclimate.com/github/weacast/grib2json/badges/gpa.svg)](https://codeclimate.com/github/weacast/grib2json)
