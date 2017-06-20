@@ -15,7 +15,7 @@ describe('weacast-grib2json', () => {
 
   it('generates valid json', () => {
     let jsonArray = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'gfs.json')))
-    grib2json(path.join(__dirname, 'data', 'gfs.grib'), {
+    return grib2json(path.join(__dirname, 'data', 'gfs.grib'), {
       data: true
     }).then(function (points) {
       chai.expect(points.length).to.equal(jsonArray.length)
