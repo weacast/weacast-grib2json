@@ -9,7 +9,9 @@ const grib2jsonCommand = process.env.GRIB2JSON ||
 var grib2json = function (filePath, options) {
   let promise = new Promise(function (resolve, reject) {
     let optionsNames = Object.keys(options)
-    optionsNames = optionsNames.filter(arg => options[arg] && arg !== 'version')
+    optionsNames = optionsNames.filter(arg => options[arg] &&
+      // These ones are used internally
+      arg !== 'bufferSize' && arg !== 'version')
     let args = []
     optionsNames.forEach(name => {
       if (typeof options[name] === 'boolean') {
