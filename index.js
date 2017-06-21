@@ -21,7 +21,7 @@ var grib2json = function (filePath, options) {
     })
     // Last to come the file name
     args.push(filePath)
-    execFile(grib2jsonCommand, args, { maxBuffer: options.bufferSize || 8*1024*1024 }, (error, stdout, stderr) => {
+    execFile(grib2jsonCommand, args, { maxBuffer: options.bufferSize || 8 * 1024 * 1024 }, (error, stdout, stderr) => {
       if (error) {
         reject(error)
         return

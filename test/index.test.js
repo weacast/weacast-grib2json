@@ -1,4 +1,4 @@
-let fs = require('fs')
+let fs = require('fs-extra')
 let path = require('path')
 let chai = require('chai')
 let chailint = require('chai-lint')
@@ -43,6 +43,7 @@ describe('weacast-grib2json', () => {
     dx: 1,
     dy: 1
   }
+  const output = path.join(__dirname, 'data', 'output.json')
 
   before(() => {
     chailint(chai, chai.util)
@@ -55,7 +56,8 @@ describe('weacast-grib2json', () => {
   it('generates valid json', () => {
     let jsonArray = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'gfs.json')))
     return grib2json(path.join(__dirname, 'data', 'gfs.grib'), {
-      data: true
+      data: true,
+      output: output
     }).then(function (json) {
       // We extract a single variable
       chai.expect(json.length).to.equal(1)
@@ -64,6 +66,14 @@ describe('weacast-grib2json', () => {
       // Check for data
       chai.expect(json[0].data.length).to.equal(jsonArray.length)
       chai.expect(json[0].data).to.deep.equal(jsonArray)
+      // Check for output
+      let jsonOutput = JSON.parse(fs.readFileSync(output))
+      chai.expect(json).to.deep.equal(jsonOutput)
     })
+  })
+
+  // Cleanup
+  after(() => {
+    fs.removeSync(output)
   })
 })
