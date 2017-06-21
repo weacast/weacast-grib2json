@@ -37,7 +37,7 @@ var grib2json = function (filePath, options) {
         })
       } else {
         let json = JSON.parse(stdout)
-        console.log(json)
+        if (program.verbose) console.log(stdout)
         resolve(json)
       }
     })
