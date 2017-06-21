@@ -1,48 +1,45 @@
 # weacast-grib2json
 
+[![Build Status](https://travis-ci.org/weacast/weacast-grib2json.png?branch=master)](https://travis-ci.org/weacast/weacast-grib2json)
+[![Code Climate](https://codeclimate.com/github/weacast/weacast-grib2json/badges/gpa.svg)](https://codeclimate.com/github/weacast/weacast-grib2json)
+[![Test Coverage](https://codeclimate.com/github/weacast/weacast-grib2json/badges/coverage.svg)](https://codeclimate.com/github/weacast/weacast-grib2json/coverage)
+[![Dependency Status](https://img.shields.io/david/weacast/weacast-grib2json.svg?style=flat-square)](https://david-dm.org/weacast/weacast-grib2json)
+[![Download Status](https://img.shields.io/npm/dm/grib2json.svg?style=flat-square)](https://www.npmjs.com/package/weacast-grib2json)
+
 A command line utility that decodes [GRIB2](http://en.wikipedia.org/wiki/GRIB) files as JSON.
 
 This utility uses the netCDF-Java GRIB decoder, part of the [THREDDS](https://github.com/Unidata/thredds) project
 by University Corporation for Atmospheric Research/Unidata.
 
-Installation
-------------
+It has been embedded in a NPM package and provides the same features as a [Node.js](https://nodejs.org) CLI or module.
 
-This requires Java to be installed on your system and the JAVA_HOME environment variable to be positioned.
+## Installation
 
-```
-git clone <this project>
-```
+**This requires Java to be installed on your system and the JAVA_HOME environment variable to be positioned and point to your local Java binaries.**
 
-The project contains a bin/lib folders with the latest version.
-
-Build
------
-
-This requires Maven to be installed on your system.
+### Java CLI
 
 ```
 git clone <this project>
-mvn package
 ```
 
-This creates a .tar.gz in the target directory. Unzip and untar the package in a location of choice.
-The package contains a bin/lib folders that should be at the same hierarchical level (e.g. in /usr).
+The project contains a *bin/lib* folders with the latest x86 version. The *bin* folder contains a `grib2json` CLI script for Linux-based and Windows-based OS, you should add this folder to your PATH.
 
-A Docker file is also provided to get the tool ready to work within a container, from the project root run:
-```
-docker build -t weacast/grib2json .
-```
-
-Usage
------
-
-The `grib2json` launch script is located in the `bin` directory and requires the `JAVA_HOME` environment
-variable to be defined.
+### Node.js CLI
 
 ```
-> grib2json --help
-Usage: grib2json [options] FILE
+npm install -g weacast-grib2json
+```
+
+## Usage
+
+### As CLI
+
+The `grib2json` CLI can be used similarly from the native OS CLI or from Node.
+
+```
+> grib2json --help (or node index.js --help)
+Usage: grib2json (or index) [options] FILE
 	[--compact -c] : enable compact Json formatting
 	[--data -d] : print GRIB record data
 	[--filter.category --fc value] : select records with this numeric category
@@ -92,4 +89,36 @@ _gfs.t18z.pgrbf00.2p5deg.grib2_. Notice the optional inclusion of human-readable
 When using the tool as a Docker container the arguments to the CLI have to be provided through the ARGS environment variable, with the data volume required to make input accessible within the container and get output file back the previous example becomes:
 ```
 docker run --name grib2json --rm -v /mnt/data:/usr/local/data -e "ARGS=--names --data --fp 2 --fs 103 --fv 10.0 --output /usr/local/data/output.json /usr/local/data/gfs.t18z.pgrbf00.2p5deg.grib2" weacast/grib2json
+```
+
+### As module
+
+Just call the `grib2json` default export function in your code:
+```javascript
+let grib2json = require('weacast-grib2json')
+// First arg is the input file path, second arg is CLI options as JS object
+grib2json('gfs.grib', {
+  data: true,
+  output: 'output.json'
+})
+.then(function (json) {
+  // Do whatever with the json data, same format as output of the CLI
+})
+```
+
+## Build
+
+This requires Maven to be installed on your system.
+
+```
+git clone <this project>
+mvn package
+```
+
+This creates a *.tar.gz* in the target directory. Unzip and untar the package in a location of choice.
+The package contains a *bin/lib* folders that should be at the same hierarchical level (e.g. in */usr*).
+
+A Docker file is also provided to get the tool ready to work within a container, from the project root run:
+```
+docker build -t weacast/grib2json .
 ```
