@@ -17,7 +17,7 @@ var grib2json = function (filePath, options) {
       }
     })
     args.push(filePath)
-    execFile(grib2jsonCommand, args, { maxBuffer: 8*1024*1024 }, (error, stdout, stderr) => {
+    execFile(grib2jsonCommand, args, { maxBuffer: options.bufferSize || 8*1024*1024 }, (error, stdout, stderr) => {
       if (error) {
         reject(error)
         return
@@ -28,10 +28,13 @@ var grib2json = function (filePath, options) {
             reject(error)
             return
           }
+          if (program.verbose) console.log(json)
           resolve(json)
         })
       } else {
-        resolve(JSON.parse(stdout))
+        let json = JSON.parse(stdout)
+        if (program.verbose) console.log(json)
+        resolve(json)
       }
     })
   })
@@ -52,18 +55,11 @@ if (require.main === module) {
     .option('-n, --names', 'Print names of numeric codes')
     .option('-o, --output <file>', 'Output in a file instead of stdout')
     .option('-v, --verbose', 'Enable logging to stdout')
+    .option('-bs, --bufferSize <value>', 'Largest amount of data in bytes allowed on stdout or stderr')
     .parse(process.argv)
 
   var inputFile = program.args[0]
-  grib2json(inputFile, program.opts()).then(function (points) {
-    if (program.output) {
-      if (program.verbose) {
-        console.log('Wrote ' + points.length + ' points into file.')
-      }
-    } else {
-      console.log(points)
-    }
-  })
+  grib2json(inputFile, program.opts())
   .catch(function (err) {
     console.log(err)
   })
