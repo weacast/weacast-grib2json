@@ -8,14 +8,18 @@ const grib2jsonCommand = process.env.GRIB2JSON ||
 
 var grib2json = function (filePath, options) {
   let promise = new Promise(function (resolve, reject) {
-    let args = Object.keys(options)
-    args = args.filter(arg => options[arg] && arg !== 'version').map(arg => {
-      if (typeof options[arg] === 'boolean') {
-        return '--' + arg
+    let optionsNames = Object.keys(options)
+    optionsNames = optionsNames.filter(arg => options[arg] && arg !== 'version')
+    let args = []
+    optionsNames.forEach(name => {
+      if (typeof options[name] === 'boolean') {
+        args.push('--' + name)
       } else {
-        return '--' + arg + ' ' + options[arg]
+        args.push('--' + name)
+        args.push(options[name])
       }
     })
+    // Last to come the file name
     args.push(filePath)
     execFile(grib2jsonCommand, args, { maxBuffer: options.bufferSize || 8*1024*1024 }, (error, stdout, stderr) => {
       if (error) {
@@ -33,7 +37,7 @@ var grib2json = function (filePath, options) {
         })
       } else {
         let json = JSON.parse(stdout)
-        if (program.verbose) console.log(json)
+        console.log(json)
         resolve(json)
       }
     })
@@ -45,7 +49,7 @@ var grib2json = function (filePath, options) {
 if (require.main === module) {
   program
     .version(require('./package.json').version)
-    .usage('<file> [options]')
+    .usage('[options] <file>')
     .option('-d, --data', 'Print GRIB record data')
     .option('-c, --compact', 'Enable compact Json formatting')
     .option('-fc, --filter.category <value>', 'Select records with this numeric category')
@@ -58,7 +62,7 @@ if (require.main === module) {
     .option('-bs, --bufferSize <value>', 'Largest amount of data in bytes allowed on stdout or stderr')
     .parse(process.argv)
 
-  var inputFile = program.args[0]
+  var inputFile = program.args[program.args.length - 1]
   grib2json(inputFile, program.opts())
   .catch(function (err) {
     console.log(err)
