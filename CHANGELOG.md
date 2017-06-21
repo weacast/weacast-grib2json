@@ -1,5 +1,8 @@
 # Change Log
 
+## [v0.1.2](https://github.com/weacast/weacast-grib2json/tree/v0.1.2) (2017-06-21)
+[Full Changelog](https://github.com/weacast/weacast-grib2json/compare/v0.1.1...v0.1.2)
+
 ## [v0.1.1](https://github.com/weacast/weacast-grib2json/tree/v0.1.1) (2017-06-21)
 
 
