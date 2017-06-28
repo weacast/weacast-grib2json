@@ -11,8 +11,6 @@ addons:
 notifications:
   email: false
 before_script:
-  - echo $JAVA_HOME
-  - java -version
   - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
   - $JAVA_HOME/bin/java -version
   - npm install -g codeclimate-test-reporter
