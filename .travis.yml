@@ -3,6 +3,9 @@ node_js:
   - '7'
   - '6'
 addons:
+  apt:
+    packages:
+      - oracle-java8-set-default
   code_climate:
     repo_token: '24778e356ae14ff57e6ec4e6fc1a4d615debebb841ddea0b3fb4a2f54e0840e9'
 notifications:
