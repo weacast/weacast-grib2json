@@ -11,6 +11,10 @@ addons:
 notifications:
   email: false
 before_script:
+  - echo $JAVA_HOME
+  - java -version
+  - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+  - ls $JAVA_HOME
   - npm install -g codeclimate-test-reporter
 after_script:
   - codeclimate-test-reporter < coverage/lcov.info
