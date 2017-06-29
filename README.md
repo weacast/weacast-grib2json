@@ -15,7 +15,7 @@ It has been embedded in a NPM package and provides the same features as a [Node.
 
 ## Installation
 
-**This requires Java to be installed on your system and the JAVA_HOME environment variable to be positioned and point to your local Java binaries.**
+**This requires Java to be installed on your system and the JAVA_HOME environment variable to be positioned and point to your local Java root directory.**
 
 ### Java CLI
 
@@ -39,7 +39,7 @@ The `grib2json` CLI can be used similarly from the native OS CLI or from Node.
 
 ```
 > grib2json --help (or node index.js --help)
-Usage: grib2json (or index) [options] FILE
+Usage: grib2json (or node index.js) [options] FILE
 	[--compact -c] : enable compact Json formatting
 	[--data -d] : print GRIB record data
 	[--filter.category --fc value] : select records with this numeric category
@@ -85,6 +85,12 @@ _gfs.t18z.pgrbf00.2p5deg.grib2_. Notice the optional inclusion of human-readable
     }
 ]
 ```
+
+#### Using Node.js
+
+The CLI version has in this case an additional option `--bufferSize <value>`, or `-bs  <value>` in short, specifying the largest amount of data in bytes allowed on stdout (defaults to 8 MB). Indeed, because in this case the Java CLI version is called from the Node.js process using [child_process](https://nodejs.org/api/child_process.html), output is retrieved from stdout.
+
+#### Using the Docker container
 
 When using the tool as a Docker container the arguments to the CLI have to be provided through the ARGS environment variable, with the data volume required to make input accessible within the container and get output file back the previous example becomes:
 ```
