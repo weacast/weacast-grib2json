@@ -148,6 +148,28 @@
                 </executions>
             </plugin>
 
+            <!-- Includes the runtime dependencies -->
+            <plugin>
+                <groupId>com.jolira</groupId>
+                <artifactId>onejar-maven-plugin</artifactId>
+                <version>1.4.4</version>
+                <configuration>
+                    <filename>grib2json.jar</filename>
+                    <archive>
+                        <manifest>
+                            <mainClass>net.nullschool.grib2json.Launcher</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                  <execution>
+                    <goals>
+                        <goal>one-jar</goal>
+                    </goals>
+                  </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 

@@ -20,7 +20,7 @@ import java.util.*;
  *
  * @author Cameron Beccario
  */
-class Launcher {
+public class Launcher {
 
     private static final Logger log = LoggerFactory.getLogger(Launcher.class);
 
