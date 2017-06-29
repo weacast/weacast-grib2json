@@ -1,4 +1,5 @@
 #!/bin/sh
 #set -x
-cd $(dirname "$0")/../lib
-$JAVA_HOME/bin/java -Xmx512M -jar grib2json-*.jar $@
+LIB_DIR=$(dirname "$0")/../lib
+LAUNCH_JAR=$LIB_DIR/grib2json-*.jar
+$JAVA_HOME/bin/java -Xmx512M -jar $LAUNCH_JAR $@
