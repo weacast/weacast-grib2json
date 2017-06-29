@@ -1,5 +1,4 @@
 #!/bin/sh
 #set -x
-export LIB_DIR=$(dirname "$0")/../lib
-export LAUNCH_JAR=$LIB_DIR/grib2json-*.jar
-$JAVA_HOME/bin/java -Xmx512M -jar $LAUNCH_JAR $@
+cd $(dirname "$0")/../lib
+$JAVA_HOME/bin/java -Xmx512M -jar grib2json-*.jar $@
