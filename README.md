@@ -23,7 +23,7 @@ It has been embedded in a NPM package and provides the same features as a [Node.
 git clone <this project>
 ```
 
-The project contains a *bin/lib* folders with the latest x86 version. The *bin* folder contains a `grib2json` CLI script for Linux-based and Windows-based OS, you should add this folder to your PATH.
+The project contains a *bin* folder with the latest version. The *bin* folder contains a `grib2json` CLI script for Linux-based and Windows-based OS, you should add this folder to your PATH.
 
 ### Node.js CLI
 
@@ -122,7 +122,9 @@ mvn package
 ```
 
 This creates a *.tar.gz* in the target directory. Unzip and untar the package in a location of choice.
-The package contains a *bin/lib* folders that should be at the same hierarchical level (e.g. in */usr*).
+The package contains a *bin/lib* folders that should be at the same hierarchical level (e.g. in */usr*). The *lib* folder contains all dependent libraries and the execution script set it as current **LIB_PATH** before executing the main jar.
+
+A single **grib2json.jar** file is also generated using the maven plugin for [one-jar](http://one-jar.sourceforge.net/). This is the one used to provide the CLI as a stand-alone archive in the *bin* directory of the project. It is up to you to pick the one you prefer.
 
 A Docker file is also provided to get the tool ready to work within a container, from the project root run:
 ```
