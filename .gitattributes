@@ -10,3 +10,4 @@
 *.ico   binary
 *.png   binary
 *.jar	binary
+*.grib	binary
