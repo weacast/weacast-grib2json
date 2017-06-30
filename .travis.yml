@@ -15,6 +15,5 @@ before_script:
   - $JAVA_HOME/bin/java -version
   - npm install -g codeclimate-test-reporter
 after_script:
-  - /home/travis/build/weacast/weacast-grib2json/bin/grib2json /home/travis/build/weacast/weacast-grib2json/test/data/gfs.grib
   - codeclimate-test-reporter < coverage/lcov.info
 
