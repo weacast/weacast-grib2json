@@ -71,6 +71,8 @@ describe('weacast-grib2json', () => {
       chai.expect(json).to.deep.equal(jsonOutput)
     })
   })
+  // Let enough time to process data
+  .timeout(10000)
 
   // Cleanup
   after(() => {
