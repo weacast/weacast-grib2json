@@ -16,7 +16,7 @@ It has been embedded in a NPM package and provides the same features as a [Node.
 
 ## Installation
 
-**This requires Java to be installed on your system and the JAVA_HOME environment variable to be positioned and point to your local Java root directory.**
+**This requires Java 8 to be installed on your system and the JAVA_HOME environment variable to be positioned and point to your local Java root directory.**
 
 ### Java CLI
 
