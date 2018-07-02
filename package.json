@@ -3,6 +3,7 @@
   "version": "0.2.2",
   "description": "Converts GRIB V2 files to JSON array",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "postinstall": "node set_permission",
     "publish": "git push origin --tags && npm run changelog && git push origin",
