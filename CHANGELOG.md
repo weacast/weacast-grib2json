@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.0.0](https://github.com/weacast/weacast-grib2json/tree/v1.0.0) (2019-04-17)
+
+[Full Changelog](https://github.com/weacast/weacast-grib2json/compare/v0.2.3...v1.0.0)
+
+**Closed issues:**
+
+- grib2json command arguments for 850 mb level U/V compoents [\#2](https://github.com/weacast/weacast-grib2json/issues/2)
+
 ## [v0.2.3](https://github.com/weacast/weacast-grib2json/tree/v0.2.3) (2018-07-02)
 
 [Full Changelog](https://github.com/weacast/weacast-grib2json/compare/v0.2.2...v0.2.3)
