@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const fs = require('fs-extra')
 const os = require('os')
 const path = require('path')
@@ -9,11 +8,15 @@ const grib2jsonCommand = process.env.GRIB2JSON ||
   path.join(__dirname, 'bin', os.platform() === 'win32' ? 'grib2json.cmd' : 'grib2json')
 
 var grib2json = function (filePath, options) {
+  var numberFormatter = function (key, value) {
+    return value.toFixed ? Number(value.toFixed(options.precision)) : value
+  }
+
   let promise = new Promise(function (resolve, reject) {
     let optionsNames = Object.keys(options)
     optionsNames = optionsNames.filter(arg => options[arg] &&
       // These ones are used internally
-      arg !== 'bufferSize' && arg !== 'version')
+      arg !== 'bufferSize' && arg !== 'version' && arg !== 'precision')
     let args = []
     optionsNames.forEach(name => {
       if (typeof options[name] === 'boolean') {
@@ -27,6 +30,7 @@ var grib2json = function (filePath, options) {
     args.push(filePath)
     execFile(grib2jsonCommand, args, { maxBuffer: options.bufferSize || 8 * 1024 * 1024 }, (error, stdout, stderr) => {
       if (error) {
+        console.error(stderr)
         reject(error)
         return
       }
@@ -36,12 +40,22 @@ var grib2json = function (filePath, options) {
             reject(error)
             return
           }
-          if (program.verbose) console.log(json)
-          resolve(json)
+          if (options.verbose) console.log('Wrote ' + json[0].data.length + ' points into file.')
+          if (options.precision >= 0) {
+            fs.writeFile(options.output, JSON.stringify(json, numberFormatter), function (err) {
+              if (err) {
+                console.error('Writing output file failed : ', err)
+                return
+              }
+              resolve(json)
+            })
+          } else {
+            resolve(json)
+          }
         })
       } else {
         let json = JSON.parse(stdout)
-        if (program.verbose) console.log(stdout)
+        console.log(stdout)
         resolve(json)
       }
     })
@@ -62,9 +76,12 @@ if (require.main === module) {
     .option('-fv, --filter.value <value>', 'Select records with this numeric surface value')
     .option('-n, --names', 'Print names of numeric codes')
     .option('-o, --output <file>', 'Output in a file instead of stdout')
+    .option('-p, --precision <precision>', 'Limit precision in output file using the given number of digits after the decimal point', -1)
     .option('-v, --verbose', 'Enable logging to stdout')
     .option('-bs, --bufferSize <value>', 'Largest amount of data in bytes allowed on stdout or stderr')
     .parse(process.argv)
+
+  program.precision = parseInt(program.precision)
 
   var inputFile = program.args[program.args.length - 1]
   grib2json(inputFile, program.opts())

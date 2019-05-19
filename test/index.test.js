@@ -44,6 +44,7 @@ describe('weacast-grib2json', () => {
     dy: 1
   }
   const output = path.join(__dirname, 'data', 'output.json')
+  let jsonArray
 
   before(() => {
     chailint(chai, chai.util)
@@ -54,10 +55,32 @@ describe('weacast-grib2json', () => {
   })
 
   it('generates valid json', () => {
-    let jsonArray = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'gfs.json')))
+    jsonArray = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'gfs.json')))
     return grib2json(path.join(__dirname, 'data', 'gfs.grib'), {
       data: true,
-      output: output
+      output
+    }).then(function (json) {
+      // We extract a single variable
+      chai.expect(json.length).to.equal(1)
+      // Check for header
+      chai.expect(json[0].header).to.deep.equal(header)
+      // Check for data
+      chai.expect(json[0].data.length).to.equal(jsonArray.length)
+      chai.expect(json[0].data).to.deep.equal(jsonArray)
+      // Check for output
+      let jsonOutput = JSON.parse(fs.readFileSync(output))
+      chai.expect(json).to.deep.equal(jsonOutput)
+    })
+  })
+  // Let enough time to process data
+  .timeout(10000)
+
+  it('generates valid json with limited precision', () => {
+    jsonArray = jsonArray.map(value => Number(value.toFixed(2)))
+    return grib2json(path.join(__dirname, 'data', 'gfs.grib'), {
+      data: true,
+      output,
+      precision: 2
     }).then(function (json) {
       // We extract a single variable
       chai.expect(json.length).to.equal(1)
