@@ -51,7 +51,8 @@ Usage: grib2json (or node index.js) [options] FILE
 	[--help -h] : display this help
 	[--names -n] : print names of numeric codes
 	[--output -o value] : write output to the specified file (default is stdout)
-	[--verbose -v] : enable logging to stdout
+	[--precision -p value] : limit precision in output file using the given number of digits after the decimal point
+    	[--verbose -v] : enable logging to stdout
 ```
 
 For example, the following command outputs to stdout the records for parameter 2 (U-component_of_wind), with
