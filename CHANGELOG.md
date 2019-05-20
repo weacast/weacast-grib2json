@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.0.1](https://github.com/weacast/weacast-grib2json/tree/v1.0.1) (2019-05-20)
+
+[Full Changelog](https://github.com/weacast/weacast-grib2json/compare/v1.0.0...v1.0.1)
+
+**Implemented enhancements:**
+
+- Make output precision configurable [\#3](https://github.com/weacast/weacast-grib2json/issues/3)
+
 ## [v1.0.0](https://github.com/weacast/weacast-grib2json/tree/v1.0.0) (2019-04-17)
 
 [Full Changelog](https://github.com/weacast/weacast-grib2json/compare/v0.2.3...v1.0.0)
