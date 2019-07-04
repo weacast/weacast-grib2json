@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.0.2](https://github.com/weacast/weacast-grib2json/tree/v1.0.2) (2019-07-04)
+
+[Full Changelog](https://github.com/weacast/weacast-grib2json/compare/v1.0.1...v1.0.2)
+
+**Fixed bugs:**
+
+- Verbose option causes parsing to fail [\#5](https://github.com/weacast/weacast-grib2json/issues/5)
+- Log too much info when used as module [\#4](https://github.com/weacast/weacast-grib2json/issues/4)
+
 ## [v1.0.1](https://github.com/weacast/weacast-grib2json/tree/v1.0.1) (2019-05-20)
 
 [Full Changelog](https://github.com/weacast/weacast-grib2json/compare/v1.0.0...v1.0.1)
