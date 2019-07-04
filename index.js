@@ -7,6 +7,8 @@ const execFile = require('child_process').execFile
 const grib2jsonCommand = process.env.GRIB2JSON ||
   path.join(__dirname, 'bin', os.platform() === 'win32' ? 'grib2json.cmd' : 'grib2json')
 
+const INTERNAL_OPTIONS = ['bufferSize', 'version', 'precision', 'verbose']
+
 var grib2json = function (filePath, options) {
   var numberFormatter = function (key, value) {
     return value.toFixed ? Number(value.toFixed(options.precision)) : value
@@ -16,7 +18,7 @@ var grib2json = function (filePath, options) {
     let optionsNames = Object.keys(options)
     optionsNames = optionsNames.filter(arg => options[arg] &&
       // These ones are used internally
-      arg !== 'bufferSize' && arg !== 'version' && arg !== 'precision')
+      !INTERNAL_OPTIONS.includes(arg))
     let args = []
     optionsNames.forEach(name => {
       if (typeof options[name] === 'boolean') {
@@ -40,7 +42,9 @@ var grib2json = function (filePath, options) {
             reject(error)
             return
           }
-          if (options.verbose) console.log('Wrote ' + json[0].data.length + ' points into file.')
+          if (options.verbose) {
+            json.forEach(variable => console.log('Wrote ' + variable.data.length + ' points into file for variable ', variable.header))
+          }
           if (options.precision >= 0) {
             fs.writeFile(options.output, JSON.stringify(json, numberFormatter), function (err) {
               if (err) {
@@ -55,7 +59,11 @@ var grib2json = function (filePath, options) {
         })
       } else {
         let json = JSON.parse(stdout)
-        console.log(stdout)
+        if (options.verbose) {
+          json.forEach(variable => console.log('Generated ' + variable.data.length + ' points in memory for variable ', variable.header))
+        }
+        // Does not make really sense except as CLI
+        if (require.main === module) console.log(stdout)
         resolve(json)
       }
     })
