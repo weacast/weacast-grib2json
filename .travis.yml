@@ -1,12 +1,10 @@
+dist: trusty
 language: node_js
 node_js:
 - '8'
 - '7'
 - '6'
 addons:
-  apt:
-    packages:
-    - oracle-java9-set-default
   code_climate:
     repo_token: 24778e356ae14ff57e6ec4e6fc1a4d615debebb841ddea0b3fb4a2f54e0840e9
 notifications:
@@ -17,7 +15,6 @@ notifications:
     on_success: always
     on_failure: always
 before_script:
-- export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 - "$JAVA_HOME/bin/java -version"
 - npm install -g codeclimate-test-reporter
 after_script:
