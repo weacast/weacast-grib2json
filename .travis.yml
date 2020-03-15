@@ -1,9 +1,8 @@
 dist: trusty
 language: node_js
 node_js:
-- '8'
-- '7'
-- '6'
+- '10'
+- '12'
 addons:
   code_climate:
     repo_token: 24778e356ae14ff57e6ec4e6fc1a4d615debebb841ddea0b3fb4a2f54e0840e9
