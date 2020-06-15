@@ -12,8 +12,8 @@
     "release:major": "npm version major && npm publish",
     "changelog": "github_changelog_generator -u weacast -p weacast-grib2json && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "lint": "standard *.js test/*.js --fix",
-    "mocha": "mocha --opts mocha.opts",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
+    "mocha": "mocha --exit",
+    "coverage": "nyc npm run mocha",
     "test": "npm run lint && npm run coverage"
   },
   "standard": {
@@ -41,10 +41,10 @@
     "fs-extra": "^4.0.2"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.2.0",
     "chai-lint": "^0.1.1",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.3.0",
+    "nyc": "^15.0.1",
+    "mocha": "^6.2.0",
     "standard": "^10.0.2"
   }
 }
