@@ -104,11 +104,22 @@ docker run --name grib2json --rm -v /mnt/data:/usr/local/data -e "ARGS=--names -
 
 Just call the `grib2json` default export function in your code:
 ```javascript
-let grib2json = require('weacast-grib2json')
+const grib2json = require('weacast-grib2json')
 // First arg is the input file path, second arg is CLI options as JS object
 grib2json('gfs.grib', {
   data: true,
   output: 'output.json'
+})
+.then(function (json) {
+  // Do whatever with the json data, same format as output of the CLI
+})
+```
+
+Just like the CLI version you can use the additional `bufferSize` option to specify the largest amount of data in bytes allowed on stdout (defaults to 8 MB), notably if you deal with large files. You can also process data only in-memory without writing any file by omitting the output:
+```javascript
+grib2json('gfs.grib', {
+  data: true,
+  bufferSize: 128 * 1024 * 1024 // 128 MB
 })
 .then(function (json) {
   // Do whatever with the json data, same format as output of the CLI
