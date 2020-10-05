@@ -115,7 +115,7 @@ grib2json('gfs.grib', {
 })
 ```
 
-Just like the CLI version you can use the additional `bufferSize` option to specify the largest amount of data in bytes allowed on stdout (defaults to 8 MB), notably if you deal with large files. You can also process data only in-memory without writing any file by omitting the output:
+Like with the CLI version you can use the additional `bufferSize` option to specify the largest amount of data in bytes allowed on stdout (defaults to 8 MB), notably if you deal with large files. You can also process data only in-memory without writing any file by omitting the output:
 ```javascript
 grib2json('gfs.grib', {
   data: true,
