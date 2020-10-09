@@ -4,7 +4,6 @@
 [![Code Climate](https://codeclimate.com/github/weacast/weacast-grib2json/badges/gpa.svg)](https://codeclimate.com/github/weacast/weacast-grib2json)
 [![Test Coverage](https://codeclimate.com/github/weacast/weacast-grib2json/badges/coverage.svg)](https://codeclimate.com/github/weacast/weacast-grib2json/coverage)
 [![Dependency Status](https://img.shields.io/david/weacast/weacast-grib2json.svg?style=flat-square)](https://david-dm.org/weacast/weacast-grib2json)
-[![Known Vulnerabilities](https://snyk.io/test/github/weacast/weacast-grib2json/badge.svg)](https://snyk.io/test/github/weacast/weacast-grib2json)
 [![Download Status](https://img.shields.io/npm/dm/grib2json.svg?style=flat-square)](https://www.npmjs.com/package/weacast-grib2json)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fweacast%2Fweacast-grib2json.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fweacast%2Fweacast-grib2json?ref=badge_shield)
 
