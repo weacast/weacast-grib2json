@@ -25,7 +25,7 @@ var grib2json = function (filePath, options) {
         args.push('--' + name)
       } else {
         args.push('--' + name)
-        args.push(options[name])
+        args.push(options[name].toString())
       }
     })
     // Last to come the file name
