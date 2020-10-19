@@ -1,5 +1,19 @@
 # Changelog
 
+## [v1.0.3](https://github.com/weacast/weacast-grib2json/tree/v1.0.3) (2020-10-19)
+
+[Full Changelog](https://github.com/weacast/weacast-grib2json/compare/v1.0.2...v1.0.3)
+
+**Closed issues:**
+
+- The precision option seems to have no effect when used via node.js [\#15](https://github.com/weacast/weacast-grib2json/issues/15)
+- Errors: "ERR\_FS\_FILE\_TOO\_LARGE" and "Cannot create a string longer than 0x3fffffe7 characters" [\#14](https://github.com/weacast/weacast-grib2json/issues/14)
+- Using grib2json without any output file or even input file [\#13](https://github.com/weacast/weacast-grib2json/issues/13)
+
+**Merged pull requests:**
+
+- Added multi-stage build to Dockerfile [\#6](https://github.com/weacast/weacast-grib2json/pull/6) ([fabiogaragiola](https://github.com/fabiogaragiola))
+
 ## [v1.0.2](https://github.com/weacast/weacast-grib2json/tree/v1.0.2) (2019-07-04)
 
 [Full Changelog](https://github.com/weacast/weacast-grib2json/compare/v1.0.1...v1.0.2)
