@@ -125,6 +125,8 @@ grib2json('gfs.grib', {
 })
 ```
 
+**Warning: the `precision` option only applies when writing an output, in-memory data will remain floating point values without any precision loss**
+
 ## Build
 
 This requires Maven to be installed on your system.
