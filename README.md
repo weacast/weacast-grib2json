@@ -1,6 +1,6 @@
 # weacast-grib2json
 
-[![Build Status](https://travis-ci.org/weacast/weacast-grib2json.png?branch=master)](https://travis-ci.org/weacast/weacast-grib2json)
+[![Build Status](https://travis-ci.com/weacast/weacast-grib2json.png?branch=master)](https://travis-ci.com/weacast/weacast-grib2json)
 [![Code Climate](https://codeclimate.com/github/weacast/weacast-grib2json/badges/gpa.svg)](https://codeclimate.com/github/weacast/weacast-grib2json)
 [![Test Coverage](https://codeclimate.com/github/weacast/weacast-grib2json/badges/coverage.svg)](https://codeclimate.com/github/weacast/weacast-grib2json/coverage)
 [![Dependency Status](https://img.shields.io/david/weacast/weacast-grib2json.svg?style=flat-square)](https://david-dm.org/weacast/weacast-grib2json)
