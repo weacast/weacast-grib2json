@@ -4,11 +4,11 @@ const program = require('commander')
 const execFile = require('child_process').execFile
 const grib2jsonCommand = process.env.GRIB2JSON || 'grib_dump'
 
-const INTERNAL_OPTIONS = ['output', 'bufferSize', 'version', 'precision', 'verbose']
+const INTERNAL_OPTIONS = ['output', 'bufferSize', 'version', 'floatPrecision', 'verbose']
 
 var grib2json = function (filePath, options) {
   var numberFormatter = function (key, value) {
-    return (value.toFixed && (options.precision >= 0)) ? Number(value.toFixed(options.precision)) : value
+    return (value.toFixed && (options.floatPrecision >= 0)) ? Number(value.toFixed(options.floatPrecision)) : value
   }
 
   let promise = new Promise(function (resolve, reject) {
@@ -68,12 +68,12 @@ if (require.main === module) {
     .version(require('./package.json').version)
     .usage('[options] <file>')
     .option('-o, --output <file>', 'Output in a file instead of stdout')
-    .option('-p, --precision <precision>', 'Limit precision in output file using the given number of digits after the decimal point', -1)
+    .option('-fp, --floatPrecision <precision>', 'Limit precision in output file using the given number of digits after the decimal point', -1)
     .option('-v, --verbose', 'Enable logging to stdout')
     .option('-bs, --bufferSize <value>', 'Largest amount of data in bytes allowed on stdout or stderr')
     .parse(process.argv)
 
-  program.precision = parseInt(program.precision)
+  program.floatPrecision = parseInt(program.floatPrecision)
 
   var inputFile = program.args[program.args.length - 1]
   grib2json(inputFile, program.opts())
