@@ -24,7 +24,7 @@ jobs:
     - docker
     install: skip
     script:
-    - travis_wait bash .travis.build.sh
+    - bash .travis.build.sh
   - stage: TEST
     language: node_js
     node_js:
@@ -39,6 +39,6 @@ jobs:
     install:
     - npm install -g codeclimate-test-reporter
     script:
-    - travis_wait bash .travis.test.sh
+    - bash .travis.test.sh
     after_script:
     - codeclimate-test-reporter < coverage/lcov.info
