@@ -36,11 +36,14 @@ var grib2json = function (filePath, options) {
         return
       }
       let json = JSON.parse(stdout)
-      /*
-      if (options.verbose) {
-        json.forEach(variable => console.log('Generated ' + variable.data.length + ' points in memory for variable ', variable.header))
+      if (options.verbose && json.messages) {
+        json.messages.forEach(message => {
+          const data = message.find(entry => entry.key === 'values')
+          const header = message.filter(entry => entry.key !== 'values')
+          if (data) console.log('Generated ' + data.value.length + ' points in memory for message ', header)
+          else console.log('Generated message ', header)
+        })
       }
-      */
       // Does not make really sense except as CLI
       if (require.main === module) console.log(stdout)
       if (options.output) {

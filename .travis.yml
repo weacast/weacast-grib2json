@@ -1,11 +1,3 @@
-dist: trusty
-language: node_js
-node_js:
-- '10'
-- '12'
-addons:
-  code_climate:
-    repo_token: 24778e356ae14ff57e6ec4e6fc1a4d615debebb841ddea0b3fb4a2f54e0840e9
 notifications:
   email: false
   slack:
@@ -13,8 +5,40 @@ notifications:
       secure: qg+pq+L5OZlM+LYSANdGGutO0zWFQc85ql7pqdU/4aJ7Omcs7n0Pz7JO1xJTAGpoWV0JcAUbuIC0grot+08amzs0tobvIojRJwANGlUeRuv7LohoVmBXeVTTeZI4Z4Anum33wpbpLlel/aUfYeX1G5TNX3o6Feh8/ASF8FAn3gOY0+6ZUKXVLjew/abH/F7l6SP+0F3pgLYEjkxYi8oNADiRqk5+gEAq4PeCIYNGEOLWRpC7DuMwxz8pwQLq08CCQqMKA55WbzaK0HgTG3MnCor7rDz15XGqV8c1cft+hnv/WIwcfZ+mCj8eP8tGUPtdsQXiaU54ivwRSNdNMwG1+zs8MqhkLW+7xnNBhEz2hj4heIV7a2+LXeFuot/9rL7EKnJN6TI1+b+nMvGGeN4pHxalPXCCOh1B98s9MrWyzRrTc6vSXgW8+oB4w2dlqgHaQspZfnoQNppKExJgc5xrzu05IVlQ5xb9NtRdxV27imXnfgm8GmFpQyKqEs1gPuf1kDQiJ7AO+GdfOFMlIbFgMX4r6cTmZpyLigctJXzO0nqTQrGxMMdmkX/QZha79POe8+DZBNISHZGk1QEO/5XLGqC2etFfcO7KNqluRwvgGN3ROOnt0D6Z4aMLK41atcuPt/IJQBuvNr+i+ox360aSXdq8X7rW0oUMiBhz9+Nztqs=
     on_success: always
     on_failure: always
-before_script:
-- "$JAVA_HOME/bin/java -version"
-- npm install -g codeclimate-test-reporter
-after_script:
-- codeclimate-test-reporter < coverage/lcov.info
+
+stages:
+- name: BUILD
+  if: commit_message !~ /\[skip build\]/
+- name: TEST
+  if: commit_message !~ /\[skip test\]/
+
+jobs:
+  include:
+  - stage: BUILD
+    language: node_js
+    node_js:
+    - '12'
+    cache: yarn
+    sudo: required
+    services:
+    - docker
+    install: skip
+    script:
+    - travis_wait bash .travis.build.sh
+  - stage: TEST
+    language: node_js
+    node_js:
+    - '12'
+    cache: yarn
+    sudo: required
+    services:
+    - docker
+    addons:
+      code_climate:
+        repo_token: 24778e356ae14ff57e6ec4e6fc1a4d615debebb841ddea0b3fb4a2f54e0840e9
+    install:
+    - npm install -g codeclimate-test-reporter
+    script:
+    - travis_wait bash .travis.test.sh
+    after_script:
+    - codeclimate-test-reporter < coverage/lcov.info

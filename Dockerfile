@@ -7,7 +7,7 @@ ARG VERSION=2.19.1
 WORKDIR /tmp
 
 ENV DOWNLOAD_URL=https://confluence.ecmwf.int/download/attachments/45757960
-ENV	ECCODES=eccodes-${VERSION}-Source
+ENV ECCODES=eccodes-${VERSION}-Source
 RUN cd /tmp && wget --output-document=${ECCODES}.tar.gz ${DOWNLOAD_URL}/${ECCODES}.tar.gz?api=v2
 RUN tar -zxvf ${ECCODES}.tar.gz
 
