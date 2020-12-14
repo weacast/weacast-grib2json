@@ -1,13 +1,16 @@
-FROM maven:3-jdk-8-onbuild as builder
+FROM debian:buster-slim
+RUN apt-get update -y
+RUN apt install -y wget cmake libjpeg-dev libpng-dev libnetcdf-dev hdf5-tools libhdf5-dev libhdf5-serial-dev
 
-# Install built package
-RUN tar -xvzf target/grib2json-*.gz
-RUN mkdir -p /output/bin/ /output/lib/
-RUN cp grib2json-*/bin/* /output/bin/
-RUN cp grib2json-*/lib/* /output/lib/
+ARG VERSION=2.19.1
 
-FROM openjdk:8-jre-alpine
-COPY --from=builder /output/bin/ /usr/bin
-COPY --from=builder /output/lib/ /usr/lib
+WORKDIR /tmp
 
-CMD grib2json $ARGS
+ENV DOWNLOAD_URL=https://confluence.ecmwf.int/download/attachments/45757960
+ENV	ECCODES=eccodes-${VERSION}-Source
+RUN cd /tmp && wget --output-document=${ECCODES}.tar.gz ${DOWNLOAD_URL}/${ECCODES}.tar.gz?api=v2
+RUN tar -zxvf ${ECCODES}.tar.gz
+
+RUN cd ${ECCODES} && mkdir build && cd build && cmake -DENABLE_FORTRAN=OFF -DENABLE_PNG=ON .. && make -j2 && make install
+
+CMD grib_dump $ARGS

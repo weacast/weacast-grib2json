@@ -5,7 +5,6 @@
   "main": "index.js",
   "bin": "index.js",
   "scripts": {
-    "postinstall": "node set_permission",
     "publish": "git push origin --tags && npm run changelog && git push origin",
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
