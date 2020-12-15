@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/weacast/weacast-grib2json",
   "dependencies": {
-    "commander": "^2.9.0",
+    "commander": "^6.2.0",
     "fs-extra": "^4.0.2"
   },
   "devDependencies": {

@@ -4,31 +4,14 @@ const program = require('commander')
 const execFile = require('child_process').execFile
 const grib2jsonCommand = process.env.GRIB2JSON || 'grib_dump'
 
-const INTERNAL_OPTIONS = ['output', 'bufferSize', 'version', 'floatPrecision', 'verbose']
-
-var grib2json = function (filePath, options) {
+var grib2json = function (filePath, options, gribDumpArgs = []) {
   var numberFormatter = function (key, value) {
-    return (value.toFixed && (options.floatPrecision >= 0)) ? Number(value.toFixed(options.floatPrecision)) : value
+    return (value.toFixed && (options.precision >= 0)) ? Number(value.toFixed(options.precision)) : value
   }
 
   let promise = new Promise(function (resolve, reject) {
-    let optionsNames = Object.keys(options)
-    optionsNames = optionsNames.filter(arg => options[arg] &&
-      // These ones are used internally
-      !INTERNAL_OPTIONS.includes(arg))
-    let args = []
-    optionsNames.forEach(name => {
-      if (typeof options[name] === 'boolean') {
-        args.push('-' + name)
-      } else {
-        args.push('-' + name)
-        args.push(options[name].toString())
-      }
-    })
-    // Force export to JSON
-    args.push('-j')
-    // Last to come the file name
-    args.push(filePath)
+    // Forward additional options to grib_dump by forcing export to JSON
+    const args = ['-j'].concat(gribDumpArgs).concat([filePath])
     execFile(grib2jsonCommand, args, { maxBuffer: options.bufferSize || 8 * 1024 * 1024 }, (error, stdout, stderr) => {
       if (error) {
         console.error(stderr)
@@ -67,16 +50,18 @@ if (require.main === module) {
   program
     .version(require('./package.json').version)
     .usage('[options] <file>')
+    .allowUnknownOption()
     .option('-o, --output <file>', 'Output in a file instead of stdout')
-    .option('-fp, --floatPrecision <precision>', 'Limit precision in output file using the given number of digits after the decimal point', -1)
+    .option('-P, --precision <precision>', 'Limit precision in output file using the given number of digits after the decimal point', -1)
     .option('-v, --verbose', 'Enable logging to stdout')
-    .option('-bs, --bufferSize <value>', 'Largest amount of data in bytes allowed on stdout or stderr')
+    .option('-b, --buffer-size <value>', 'Largest amount of data in bytes allowed on stdout or stderr')
     .parse(process.argv)
 
-  program.floatPrecision = parseInt(program.floatPrecision)
-
-  var inputFile = program.args[program.args.length - 1]
-  grib2json(inputFile, program.opts())
+  program.precision = parseInt(program.precision)
+  if (program.bufferSize) program.bufferSize = parseInt(program.bufferSize)
+  // Extract input file path
+  const inputFile = program.args.pop()
+  grib2json(inputFile, program.opts(), program.args)
   .catch(function (err) {
     console.log(err)
   })

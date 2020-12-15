@@ -43,9 +43,9 @@ describe('weacast-grib2json', () => {
   it('generates valid json with only data in file', () => {
     jsonArray = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'gfs.json')))
     return grib2json(path.join(__dirname, 'data', 'gfs.grib'), {
-      p: 'values',
-      output, verbose: true
-    }).then(function (json) {
+      output,
+      verbose: true
+    }, ['-p', 'values']).then(function (json) {
       // We extract a single key
       chai.expect(json.key).to.equal('values')
       // Check for data
@@ -62,10 +62,10 @@ describe('weacast-grib2json', () => {
   it('generates valid json with only data and limited precision in file', () => {
     jsonArray = jsonArray.map(value => Number(value.toFixed(2)))
     return grib2json(path.join(__dirname, 'data', 'gfs.grib'), {
-      p: 'values',
-      output, verbose: true,
+      output,
+      verbose: true,
       precision: 2
-    }).then(function (json) {
+    }, ['-p', 'values']).then(function (json) {
       // We extract a single key
       chai.expect(json.key).to.equal('values')
       // Check for data

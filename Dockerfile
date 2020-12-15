@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM node:12-buster-slim
 RUN apt-get update -y
 RUN apt install -y wget cmake libjpeg-dev libpng-dev libnetcdf-dev hdf5-tools libhdf5-dev libhdf5-serial-dev
 
@@ -13,4 +13,9 @@ RUN tar -zxvf ${ECCODES}.tar.gz
 
 RUN cd ${ECCODES} && mkdir build && cd build && cmake -DENABLE_FORTRAN=OFF -DENABLE_PNG=ON .. && make -j2 && make install
 
-CMD grib_dump $ARGS
+RUN mkdir weacast-grib2json
+COPY . /tmp/weacast-grib2json
+WORKDIR /tmp/weacast-grib2json
+RUN npm install && npm link
+
+CMD weacast-grib2json $ARGS
