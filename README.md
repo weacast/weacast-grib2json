@@ -1,3 +1,5 @@
+> **Important:** this module is now deprecated, please use the corresponding package in the [weacast monorepo](https://github.com/weacast/weacast).
+
 # weacast-grib2json
 
 [![Build Status](https://app.travis-ci.com/weacast/weacast-grib2json.svg?branch=master)](https://app.travis-ci.com/weacast/weacast-grib2json)
